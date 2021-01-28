@@ -5,11 +5,11 @@ import { createConnections, Connection } from 'typeorm';
 
 dotenv.config();
 
-export default async (): Promise<Connection[]> => {
+export default async (isTesting = false): Promise<Connection[]> => {
     let mongo_port = Number(process.env.MONGO_PORT);
     let mongo_database = process.env.MONGO_DBNAME;
 
-    if (process.env.CURRENT_ENVIROMENT === 'DEV') {
+    if (isTesting) {
         const mongo_data = new MongoMemoryServer();
 
         mongo_port = await mongo_data.getPort();

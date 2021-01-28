@@ -7,7 +7,7 @@ describe('Product Repository context', () => {
     let productRepository: ProductRepository;
 
     beforeEach(async () => {
-        await connect();
+        await connect(true);
         productRepository = new ProductRepository();
     });
 
