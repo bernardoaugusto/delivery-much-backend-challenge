@@ -36,6 +36,17 @@ export default class ProductService {
         return this.createAndSave(product);
     }
 
+    public async decrementProduct(name: string): Promise<Product> {
+        const product = await this.findByName(name);
+
+        if (product.quantity > 0) {
+            product.quantity -= 1;
+            return this.createAndSave(product);
+        }
+
+        return product;
+    }
+
     public async findMany(params: ProductQueryParamsInterface): Promise<Product[]> {
         const options: OptionsGetAllInterface = {
             where: {},
