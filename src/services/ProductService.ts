@@ -36,7 +36,7 @@ export default class ProductService {
         const options: OptionsGetAllInterface = {
             where: {},
         };
-        if (params.name) options.where!.name = params.name;
+        if (params.name) options.where!.name = { $regex: params.name };
         if (params.price) options.where!.price = Number(params.price);
         if (params.quantity) options.where!.quantity = Number(params.quantity);
 

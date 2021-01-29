@@ -73,13 +73,54 @@ describe('Product Route context', () => {
     it('should be call controller findOne with id returns status 200', async () => {
         const productId = new ObjectID().toString();
 
-        productServiceSpy.findOne.resolves(<any>'productServiceSpy');
+        productServiceSpy.findOne.resolves(<any>'findOne');
         sinon.stub(container, 'resolve').returns(productServiceSpy);
 
         const res = await request(app).get(`/api/products/${productId}`);
 
         expect(res.status).toBe(200);
-        expect(res.body).toBe('productServiceSpy');
+        expect(res.body).toBe('findOne');
         expect(productServiceSpy.findOne.calledWithExactly(productId)).toBeTruthy();
+    });
+
+    it('should be call controller findOne return status 400 when parameter is not an ObjectID', async () => {
+        sinon.stub(container, 'resolve').returns(productServiceSpy);
+
+        const res = await request(app).get('/api/products/123');
+
+        expect(res.status).toBe(400);
+        expect(isParamsInValidationErrors(['id'], res.body.errors)).toBeTruthy();
+
+        expect(productServiceSpy.create.notCalled).toBeTruthy();
+    });
+
+    it('should be call controller findMany returns status 200 without filter', async () => {
+        productServiceSpy.findMany.resolves(<any>'findMany');
+        sinon.stub(container, 'resolve').returns(productServiceSpy);
+
+        const res = await request(app).get(`/api/products`);
+
+        expect(res.status).toBe(200);
+        expect(res.body).toBe('findMany');
+        expect(productServiceSpy.findMany.calledWithExactly({})).toBeTruthy();
+    });
+
+    it('should be call controller findMany returns status 200 with filter', async () => {
+        productServiceSpy.findMany.resolves(<any>'findMany');
+        sinon.stub(container, 'resolve').returns(productServiceSpy);
+
+        const queryParams = {
+            name: 'any_name',
+            price: '1',
+            quantity: '2',
+        };
+
+        const res = await request(app).get(`/api/products`).query(queryParams);
+
+        expect(res.status).toBe(200);
+        expect(res.body).toBe('findMany');
+        expect(
+            productServiceSpy.findMany.calledWithExactly(queryParams),
+        ).toBeTruthy();
     });
 });
