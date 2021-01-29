@@ -2,10 +2,10 @@ import { ObjectID } from 'typeorm';
 import { ProductInterface } from '../../interfaces/product';
 
 class ProductBuilder {
-    product: Partial<ProductInterface>;
+    product: ProductInterface;
 
     constructor() {
-        this.product = {};
+        this.product = {} as ProductInterface;
     }
 
     public withId(id: ObjectID): ProductBuilder {
@@ -28,7 +28,7 @@ class ProductBuilder {
         return this;
     }
 
-    public build(): Partial<ProductInterface> {
+    public build(): ProductInterface {
         return this.product;
     }
 }

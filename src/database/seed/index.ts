@@ -34,7 +34,7 @@ export const seed = async (): Promise<void> => {
             };
         });
 
-        insertData(formattedProducts);
+        await insertData(formattedProducts);
     });
 };
 

@@ -6,7 +6,7 @@ import { ProductInterface } from '../../interfaces/product';
 describe('Product Repository context', () => {
     let productRepository: ProductRepository;
 
-    beforeEach(async () => {
+    beforeAll(async () => {
         await connect(true);
         productRepository = new ProductRepository();
     });
@@ -26,5 +26,19 @@ describe('Product Repository context', () => {
         expect(price).toBe(productData.price);
         expect(quantity).toBe(productData.quantity);
         expect(_id).not.toBeUndefined();
+    });
+
+    it('Should be return a product when find by id', async () => {
+        const productData = new ProductBuilder()
+            .withName('any name')
+            .withPrice(100)
+            .withQuantity(8)
+            .build();
+
+        const { _id } = await productRepository.createAndSave({ ...productData });
+
+        const res = await productRepository.findOne(<any>_id);
+
+        expect(res).toEqual({ ...productData, _id });
     });
 });
