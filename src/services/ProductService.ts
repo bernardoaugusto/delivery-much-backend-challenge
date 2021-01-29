@@ -1,8 +1,12 @@
 import { inject, injectable } from 'tsyringe';
 
 import Product from '../database/schemas/Product';
+import { OptionsGetAllInterface } from '../interfaces/common';
 
-import { ProductInterface } from '../interfaces/product';
+import {
+    ProductInterface,
+    ProductQueryParamsInterface,
+} from '../interfaces/product';
 import IProductRepository from '../interfaces/repositories/IProductRepository';
 import { HttpError } from '../utils/errors/HttpError';
 
@@ -14,11 +18,7 @@ export default class ProductService {
     ) {}
 
     public async create(productData: ProductInterface): Promise<Product> {
-        const productCreated = await this.productRepository.createAndSave(
-            productData,
-        );
-
-        return productCreated;
+        return this.productRepository.createAndSave(productData);
     }
 
     public async findOne(productId: string): Promise<Product> {
@@ -27,5 +27,13 @@ export default class ProductService {
         if (!product) throw new HttpError(404, 'Product not found');
 
         return product;
+    }
+
+    public async findMany(params: ProductQueryParamsInterface): Promise<Product[]> {
+        const options = {
+            where: params,
+        } as OptionsGetAllInterface;
+
+        return this.productRepository.findMany(options);
     }
 }

@@ -46,4 +46,14 @@ describe('Product', () => {
             expect(error.message).toEqual('Product not found');
         }
     });
+
+    it('Should return a Products list', async () => {
+        const sut = await makeSut();
+
+        const res = await productService.findMany({});
+
+        expect(
+            res.findIndex(product => product._id.toString() === sut._id.toString()),
+        ).toBeGreaterThanOrEqual(0);
+    });
 });

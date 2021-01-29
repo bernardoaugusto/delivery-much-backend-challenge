@@ -7,3 +7,9 @@ export interface ProductInterface {
     price: number;
     quantity: number;
 }
+
+export interface ProductQueryParamsInterface {
+    name?: string;
+    price?: number;
+    quantity?: number;
+}
