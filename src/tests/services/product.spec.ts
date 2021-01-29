@@ -26,17 +26,17 @@ describe('Product', () => {
         expect(_id).not.toBeUndefined();
     });
 
-    it('Should return a Product by id', async () => {
+    it('Should return a Product by name', async () => {
         const sut = await makeSut();
 
-        const res = await productService.findById(sut._id.toString());
+        const res = await productService.findByName(sut.name);
 
         expect(res).toEqual(sut);
     });
 
-    it('Should return a error when not found Product by id', async () => {
+    it('Should return a error when not found Product by name', async () => {
         try {
-            await productService.findById(new ObjectID().toString());
+            await productService.findByName('invalid');
         } catch (error) {
             expect(error.message).toEqual('Product not found');
         }

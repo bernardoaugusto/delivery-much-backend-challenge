@@ -1,9 +1,8 @@
 import { Router } from 'express';
 
 import * as productController from '../controllers/productController';
-import { productSchema } from '../utils/product/validators';
+import { nameParamSchema, productSchema } from '../utils/product/validators';
 import validatorMiddleware from '../utils/middleware/validator';
-import { idParamSchema } from '../utils/validation/common';
 
 const router = Router();
 
@@ -16,9 +15,9 @@ router.post(
 router.get('/', productController.findAll);
 
 router.get(
-    '/:id',
-    validatorMiddleware({ params: idParamSchema }),
-    productController.findById,
+    '/:name',
+    validatorMiddleware({ params: nameParamSchema }),
+    productController.findByName,
 );
 
 export default router;

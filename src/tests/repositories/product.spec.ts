@@ -28,20 +28,6 @@ describe('Product Repository context', () => {
         expect(_id).not.toBeUndefined();
     });
 
-    it('Should be return a product when find by id', async () => {
-        const productData = new ProductBuilder()
-            .withName('any name')
-            .withPrice(100)
-            .withQuantity(8)
-            .build();
-
-        const { _id } = await productRepository.createAndSave(productData);
-
-        const res = await productRepository.findById(<any>_id);
-
-        expect(res).toEqual({ ...productData, _id });
-    });
-
     it('Should be return a product when find by name', async () => {
         const productData = new ProductBuilder()
             .withName('findByName')

@@ -1,7 +1,6 @@
 import sinon from 'sinon';
 import request from 'supertest';
 import { container } from 'tsyringe';
-import { ObjectID } from 'mongodb';
 
 import app from '../../app';
 import ProductService from '../../services/ProductService';
@@ -70,28 +69,19 @@ describe('Product Route context', () => {
         expect(productServiceSpy.create.notCalled).toBeTruthy();
     });
 
-    it('should be call controller findById with id returns status 200', async () => {
-        const productId = new ObjectID().toString();
+    it('should be call controller findByName with id returns status 200', async () => {
+        const findByName = 'any name';
 
-        productServiceSpy.findById.resolves(<any>'findById');
+        productServiceSpy.findByName.resolves(<any>'findByName');
         sinon.stub(container, 'resolve').returns(productServiceSpy);
 
-        const res = await request(app).get(`/api/products/${productId}`);
+        const res = await request(app).get(`/api/products/${findByName}`);
 
         expect(res.status).toBe(200);
-        expect(res.body).toBe('findById');
-        expect(productServiceSpy.findById.calledWithExactly(productId)).toBeTruthy();
-    });
-
-    it('should be call controller findById return status 400 when parameter is not an ObjectID', async () => {
-        sinon.stub(container, 'resolve').returns(productServiceSpy);
-
-        const res = await request(app).get('/api/products/123');
-
-        expect(res.status).toBe(400);
-        expect(isParamsInValidationErrors(['id'], res.body.errors)).toBeTruthy();
-
-        expect(productServiceSpy.create.notCalled).toBeTruthy();
+        expect(res.body).toBe('findByName');
+        expect(
+            productServiceSpy.findByName.calledWithExactly(findByName),
+        ).toBeTruthy();
     });
 
     it('should be call controller findMany returns status 200 without filter', async () => {

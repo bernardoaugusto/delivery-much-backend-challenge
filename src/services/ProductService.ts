@@ -21,16 +21,6 @@ export default class ProductService {
         return this.productRepository.createAndSave(productData);
     }
 
-    public async findById(productId: string): Promise<Product> {
-        const product = await this.productRepository.findById(
-            new ObjectID(productId),
-        );
-
-        if (!product) throw new HttpError(404, 'Product not found');
-
-        return product;
-    }
-
     public async findByName(name: string): Promise<Product> {
         const product = await this.productRepository.findByName(name);
 
