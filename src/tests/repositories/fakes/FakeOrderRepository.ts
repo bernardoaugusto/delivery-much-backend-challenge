@@ -26,7 +26,7 @@ export default class OrderRepository implements IOrderRepository {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public async findMany(options: OptionsGetAllInterface): Promise<Order[]> {
+    public async findMany(): Promise<Order[]> {
         return this.orders;
     }
 }

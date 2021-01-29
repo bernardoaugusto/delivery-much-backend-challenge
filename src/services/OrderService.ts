@@ -61,6 +61,6 @@ export default class OrderService {
     }
 
     public async findMany(): Promise<Order[]> {
-        return this.orderRepository.findMany({});
+        return this.orderRepository.findMany();
     }
 }

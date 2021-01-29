@@ -1,5 +1,3 @@
-import { ObjectID } from 'mongodb';
-
 import Product from '../../database/schemas/Product';
 import { makeProductService } from './makeInstance/productService';
 
@@ -7,7 +5,7 @@ describe('Product', () => {
     const productService = makeProductService;
 
     const makeSut = (): Promise<Product> => {
-        return productService.create({
+        return productService.createAndSave({
             name: 'any name',
             price: 10,
             quantity: 11,
@@ -20,7 +18,9 @@ describe('Product', () => {
             quantity: 5,
         };
 
-        const { _id, ...otherProperties } = await productService.create(product);
+        const { _id, ...otherProperties } = await productService.createAndSave(
+            product,
+        );
 
         expect(otherProperties).toEqual(otherProperties);
         expect(_id).not.toBeUndefined();

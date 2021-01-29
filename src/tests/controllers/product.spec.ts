@@ -23,14 +23,16 @@ describe('Product Route context', () => {
             .withQuantity(5)
             .build() as Product;
 
-        productServiceSpy.create.resolves(<any>productData);
+        productServiceSpy.createAndSave.resolves(<any>productData);
         sinon.stub(container, 'resolve').returns(productServiceSpy);
 
         const res = await request(app).post('/api/products').send(productData);
 
         expect(res.status).toBe(201);
         expect(res.body).toStrictEqual(productData);
-        expect(productServiceSpy.create.calledWithExactly(productData)).toBeTruthy();
+        expect(
+            productServiceSpy.createAndSave.calledWithExactly(productData),
+        ).toBeTruthy();
     });
 
     it('should be return status 400 when not send params', async () => {
@@ -45,7 +47,7 @@ describe('Product Route context', () => {
                 res.body.errors,
             ),
         ).toBeTruthy();
-        expect(productServiceSpy.create.notCalled).toBeTruthy();
+        expect(productServiceSpy.createAndSave.notCalled).toBeTruthy();
     });
 
     it('should be return status 400 when send invalid params', async () => {
@@ -66,7 +68,7 @@ describe('Product Route context', () => {
                 res.body.errors,
             ),
         ).toBeTruthy();
-        expect(productServiceSpy.create.notCalled).toBeTruthy();
+        expect(productServiceSpy.createAndSave.notCalled).toBeTruthy();
     });
 
     it('should be call controller findByName with id returns status 200', async () => {

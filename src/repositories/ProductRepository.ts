@@ -1,5 +1,4 @@
 import { MongoRepository, getMongoRepository } from 'typeorm';
-import { ObjectID } from 'mongodb';
 
 import IProductRepository from '../interfaces/repositories/IProductRepository';
 import Product from '../database/schemas/Product';

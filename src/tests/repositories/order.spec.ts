@@ -57,7 +57,7 @@ describe('Order Repository context', () => {
         expect(res).toEqual({ ...orderData, _id });
     });
 
-    it('Should be return a list of orders when options not provided', async () => {
+    it('Should be return a list of orders', async () => {
         const productData = new ProductBuilder()
             .withName('test list')
             .withPrice(2)
@@ -71,8 +71,7 @@ describe('Order Repository context', () => {
 
         const sut = await orderRepository.createAndSave(orderData);
 
-        const options = {};
-        const res = await orderRepository.findMany(options);
+        const res = await orderRepository.findMany();
 
         expect(
             res.findIndex(order => order._id.toString() === sut._id.toString()),

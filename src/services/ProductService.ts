@@ -1,5 +1,4 @@
 import { inject, injectable } from 'tsyringe';
-import { ObjectID } from 'mongodb';
 
 import Product from '../database/schemas/Product';
 import { OptionsGetAllInterface } from '../interfaces/common';
@@ -17,7 +16,7 @@ export default class ProductService {
         private productRepository: IProductRepository,
     ) {}
 
-    public async create(productData: ProductInterface): Promise<Product> {
+    public async createAndSave(productData: ProductInterface): Promise<Product> {
         return this.productRepository.createAndSave(productData);
     }
 
@@ -27,6 +26,14 @@ export default class ProductService {
         if (!product) throw new HttpError(404, 'Product not found');
 
         return product;
+    }
+
+    public async incrementProduct(name: string): Promise<Product> {
+        const product = await this.findByName(name);
+
+        product.quantity += 1;
+
+        return this.createAndSave(product);
     }
 
     public async findMany(params: ProductQueryParamsInterface): Promise<Product[]> {

@@ -4,7 +4,6 @@ import { ObjectID } from 'mongodb';
 import IOrderRepository from '../interfaces/repositories/IOrderRepository';
 import Order from '../database/schemas/Order';
 import { OrderInterface } from '../interfaces/order';
-import { OptionsGetAllInterface } from '../interfaces/common';
 
 export default class OrderRepository implements IOrderRepository {
     private ormRepository: MongoRepository<Order>;
@@ -23,7 +22,7 @@ export default class OrderRepository implements IOrderRepository {
         return this.ormRepository.findOne({ where: { _id: orderId } });
     }
 
-    public async findMany(options: OptionsGetAllInterface): Promise<Order[]> {
-        return this.ormRepository.find(options);
+    public async findMany(): Promise<Order[]> {
+        return this.ormRepository.find();
     }
 }

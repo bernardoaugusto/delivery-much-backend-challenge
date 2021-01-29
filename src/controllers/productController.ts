@@ -7,7 +7,7 @@ export const create = async (req: Request, res: Response): Promise<Response> => 
     const productData = req.body;
 
     const productService = container.resolve(ProductService);
-    const response = await productService.create(productData);
+    const response = await productService.createAndSave(productData);
 
     return res.status(201).json(response);
 };

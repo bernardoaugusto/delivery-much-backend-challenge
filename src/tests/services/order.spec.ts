@@ -9,7 +9,7 @@ describe('Order', () => {
     const productService = makeProductService;
 
     const makeSut = async (): Promise<Order> => {
-        await productService.create({
+        await productService.createAndSave({
             name: 'any name',
             price: 10,
             quantity: 11,
@@ -25,7 +25,7 @@ describe('Order', () => {
         });
     };
     it('should be able to create a new order', async () => {
-        await productService.create({
+        await productService.createAndSave({
             name: 'create',
             price: 10,
             quantity: 11,
@@ -47,7 +47,7 @@ describe('Order', () => {
     });
 
     it('should return an error when the order value is greater than the stock', async () => {
-        await productService.create({
+        await productService.createAndSave({
             name: 'invalidProductName',
             price: 10,
             quantity: 11,
@@ -96,12 +96,12 @@ describe('Order', () => {
     });
 
     it('should return a list of validated products', async () => {
-        await productService.create({
+        await productService.createAndSave({
             name: 'product1',
             price: 15,
             quantity: 11,
         });
-        await productService.create({
+        await productService.createAndSave({
             name: 'product2',
             price: 10,
             quantity: 11,
