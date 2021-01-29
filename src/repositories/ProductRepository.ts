@@ -1,4 +1,6 @@
 import { MongoRepository, getMongoRepository } from 'typeorm';
+import { ObjectID } from 'mongodb';
+
 import IProductRepository from '../interfaces/repositories/IProductRepository';
 import Product from '../database/schemas/Product';
 import { ProductInterface } from '../interfaces/product';
@@ -17,7 +19,7 @@ export default class ProductRepository implements IProductRepository {
         return this.ormRepository.save(product);
     }
 
-    public async findOne(productId: string): Promise<Product | undefined> {
+    public async findOne(productId: ObjectID): Promise<Product | undefined> {
         return this.ormRepository.findOne({ where: { _id: productId } });
     }
 

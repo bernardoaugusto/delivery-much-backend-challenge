@@ -1,4 +1,5 @@
 import { inject, injectable } from 'tsyringe';
+import { ObjectID } from 'mongodb';
 
 import Product from '../database/schemas/Product';
 import { OptionsGetAllInterface } from '../interfaces/common';
@@ -22,7 +23,9 @@ export default class ProductService {
     }
 
     public async findOne(productId: string): Promise<Product> {
-        const product = await this.productRepository.findOne(productId);
+        const product = await this.productRepository.findOne(
+            new ObjectID(productId),
+        );
 
         if (!product) throw new HttpError(404, 'Product not found');
 

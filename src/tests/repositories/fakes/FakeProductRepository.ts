@@ -1,4 +1,4 @@
-import { ObjectID } from 'bson';
+import { ObjectID } from 'mongodb';
 
 import IProductRepository from '../../../interfaces/repositories/IProductRepository';
 import Product from '../../../database/schemas/Product';
@@ -12,15 +12,17 @@ export default class ProductRepository implements IProductRepository {
         const product = new Product();
 
         Object.assign(product, productData);
-        product._id = <any>new ObjectID().toString();
+        product._id = <any>new ObjectID();
 
         this.products.push(product);
 
         return product;
     }
 
-    public async findOne(productId: string): Promise<Product | undefined> {
-        return this.products.find(product => <any>product._id === productId);
+    public async findOne(productId: ObjectID): Promise<Product | undefined> {
+        return this.products.find(
+            product => product._id.toString() === productId.toString(),
+        );
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

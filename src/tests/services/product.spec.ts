@@ -1,3 +1,5 @@
+import { ObjectID } from 'mongodb';
+
 import FakeProductRepository from '../repositories/fakes/FakeProductRepository';
 import ProductService from '../../services/ProductService';
 import Product from '../../database/schemas/Product';
@@ -41,7 +43,7 @@ describe('Product', () => {
 
     it('Should return a error when not found Product by id', async () => {
         try {
-            await productService.findOne('invalid_id');
+            await productService.findOne(new ObjectID().toString());
         } catch (error) {
             expect(error.message).toEqual('Product not found');
         }
