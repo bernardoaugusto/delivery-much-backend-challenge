@@ -1,11 +1,13 @@
 import sinon from 'sinon';
 import request from 'supertest';
 import { container } from 'tsyringe';
+import { ObjectID } from 'mongodb';
 
 import app from '../../app';
 import ProductService from '../../services/ProductService';
 import Product from '../../database/schemas/Product';
 import ProductBuilder from '../testBuilders/productBuilder';
+import { isParamsInValidationErrors } from '../../utils/validation/validationError';
 
 describe('Product Route context', () => {
     let productServiceSpy: sinon.SinonStubbedInstance<ProductService>;
@@ -38,6 +40,12 @@ describe('Product Route context', () => {
         const res = await request(app).post('/api/products');
 
         expect(res.status).toBe(400);
+        expect(
+            isParamsInValidationErrors(
+                ['name', 'price', 'quantity'],
+                res.body.errors,
+            ),
+        ).toBeTruthy();
         expect(productServiceSpy.create.notCalled).toBeTruthy();
     });
 
@@ -53,6 +61,25 @@ describe('Product Route context', () => {
         const res = await request(app).post('/api/products').send(productData);
 
         expect(res.status).toBe(400);
+        expect(
+            isParamsInValidationErrors(
+                ['name', 'price', 'quantity'],
+                res.body.errors,
+            ),
+        ).toBeTruthy();
         expect(productServiceSpy.create.notCalled).toBeTruthy();
+    });
+
+    it('should be call controller findOne with id returns status 200', async () => {
+        const productId = new ObjectID().toString();
+
+        productServiceSpy.findOne.resolves(<any>'productServiceSpy');
+        sinon.stub(container, 'resolve').returns(productServiceSpy);
+
+        const res = await request(app).get(`/api/products/${productId}`);
+
+        expect(res.status).toBe(200);
+        expect(res.body).toBe('productServiceSpy');
+        expect(productServiceSpy.findOne.calledWithExactly(productId)).toBeTruthy();
     });
 });
