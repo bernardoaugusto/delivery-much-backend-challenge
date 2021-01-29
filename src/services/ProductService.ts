@@ -23,7 +23,7 @@ export default class ProductService {
     public async findByName(name: string): Promise<Product> {
         const product = await this.productRepository.findByName(name);
 
-        if (!product) throw new HttpError(404, 'Product not found');
+        if (!product) throw new HttpError(404, `Product ${name} not found`);
 
         return product;
     }

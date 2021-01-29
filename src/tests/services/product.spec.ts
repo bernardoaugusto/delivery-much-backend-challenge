@@ -38,7 +38,7 @@ describe('Product', () => {
         try {
             await productService.findByName('invalid');
         } catch (error) {
-            expect(error.message).toEqual('Product not found');
+            expect(error.message).toEqual('Product invalid not found');
         }
     });
 

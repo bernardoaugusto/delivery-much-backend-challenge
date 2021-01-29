@@ -9,14 +9,20 @@ export default class ProductRepository implements IProductRepository {
     private products: Product[] = [];
 
     public async createAndSave(productData: ProductInterface): Promise<Product> {
-        const product = new Product();
+        if (!productData._id) {
+            const productCreated = Object.assign(new Product(), productData);
+            productCreated._id = <any>new ObjectID();
 
-        Object.assign(product, productData);
-        product._id = <any>new ObjectID();
+            this.products.push(productCreated);
 
-        this.products.push(product);
+            return productCreated;
+        }
 
-        return product;
+        const index = this.products.findIndex(item => item._id === productData._id);
+
+        this.products[index] = productData as Product;
+
+        return this.products[index];
     }
 
     public async findByName(name: string): Promise<Product | undefined> {
