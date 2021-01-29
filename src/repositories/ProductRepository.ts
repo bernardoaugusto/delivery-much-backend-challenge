@@ -2,6 +2,7 @@ import { MongoRepository, getMongoRepository } from 'typeorm';
 import IProductRepository from '../interfaces/repositories/IProductRepository';
 import Product from '../database/schemas/Product';
 import { ProductInterface } from '../interfaces/product';
+import { OptionsGetAllInterface } from '../interfaces/common';
 
 export default class ProductRepository implements IProductRepository {
     private ormRepository: MongoRepository<Product>;
@@ -18,5 +19,9 @@ export default class ProductRepository implements IProductRepository {
 
     public async findOne(productId: string): Promise<Product | undefined> {
         return this.ormRepository.findOne({ where: { _id: productId } });
+    }
+
+    public async findMany(options: OptionsGetAllInterface): Promise<Product[]> {
+        return this.ormRepository.find(options);
     }
 }

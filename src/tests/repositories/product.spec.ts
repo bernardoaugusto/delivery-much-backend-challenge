@@ -28,17 +28,20 @@ describe('Product Repository context', () => {
         expect(_id).not.toBeUndefined();
     });
 
-    it('Should be return a product when find by id', async () => {
+    it('Should be return a list of products when options not provided', async () => {
         const productData = new ProductBuilder()
-            .withName('any name')
-            .withPrice(100)
-            .withQuantity(8)
+            .withName('any name 1')
+            .withPrice(178)
+            .withQuantity(88)
             .build();
 
-        const { _id } = await productRepository.createAndSave({ ...productData });
+        const sut = await productRepository.createAndSave({ ...productData });
 
-        const res = await productRepository.findOne(<any>_id);
+        const options = {};
+        const res = await productRepository.findMany(options);
 
-        expect(res).toEqual({ ...productData, _id });
+        expect(
+            res.findIndex(product => product._id.toString() === sut._id.toString()),
+        ).toBeGreaterThanOrEqual(0);
     });
 });
