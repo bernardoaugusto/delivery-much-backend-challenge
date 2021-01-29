@@ -5,8 +5,8 @@ import Order from '../database/schemas/Order';
 import { CreateOrderInterface, OrderInterface } from '../interfaces/order';
 import IOrderRepository from '../interfaces/repositories/IOrderRepository';
 import { HttpError } from '../utils/errors/HttpError';
-import Product from '../database/schemas/Product';
 import ProductService from './ProductService';
+import { ProductInterface } from '../interfaces/product';
 
 @injectable()
 export default class OrderService {
@@ -19,7 +19,7 @@ export default class OrderService {
     ) {}
 
     public async create(orderData: CreateOrderInterface): Promise<Order> {
-        const products: Product[] = [];
+        const products: ProductInterface[] = [];
 
         for (const product of orderData.products) {
             const findedProduct = await this.productService.findByName(product.name);
@@ -27,8 +27,10 @@ export default class OrderService {
             if (findedProduct.quantity < product.quantity)
                 throw new HttpError(
                     400,
-                    `Stock quantity of ${product.name} is less than the order`,
+                    `There are only ${findedProduct.quantity} units of ${product.name} in stock`,
                 );
+
+            products.push({ ...product, price: findedProduct.price });
         }
 
         const total = products.reduce(
