@@ -48,7 +48,7 @@ describe('Order', () => {
 
     it('should return an error when the order value is greater than the stock', async () => {
         await productService.create({
-            name: 'productName',
+            name: 'invalidProductName',
             price: 10,
             quantity: 11,
         });
@@ -57,14 +57,14 @@ describe('Order', () => {
             await orderService.create({
                 products: [
                     {
-                        name: 'productName',
+                        name: 'invalidProductName',
                         quantity: 12,
                     },
                 ],
             });
         } catch (error) {
             expect(error.message).toEqual(
-                'There are only 11 units of productName in stock',
+                'There are only 11 units of invalidProductName in stock',
             );
         }
     });
@@ -93,5 +93,46 @@ describe('Order', () => {
         expect(
             res.findIndex(order => order._id.toString() === sut._id.toString()),
         ).toBeGreaterThanOrEqual(0);
+    });
+
+    it('should return a list of validated products', async () => {
+        await productService.create({
+            name: 'product1',
+            price: 15,
+            quantity: 11,
+        });
+        await productService.create({
+            name: 'product2',
+            price: 10,
+            quantity: 11,
+        });
+
+        const products = [
+            {
+                name: 'product1',
+                quantity: 1,
+            },
+            {
+                name: 'product2',
+                quantity: 1,
+            },
+        ];
+
+        const expectRes = [
+            {
+                name: 'product1',
+                price: 15,
+                quantity: 1,
+            },
+            {
+                name: 'product2',
+                price: 10,
+                quantity: 1,
+            },
+        ];
+
+        const res = await orderService.validateProducts(products);
+
+        expect(res).toEqual(expectRes);
     });
 });

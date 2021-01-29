@@ -2,7 +2,7 @@ import { inject, injectable } from 'tsyringe';
 import { ObjectID } from 'mongodb';
 
 import Order from '../database/schemas/Order';
-import { CreateOrderInterface, OrderInterface } from '../interfaces/order';
+import { CreateOrderInterface } from '../interfaces/order';
 import IOrderRepository from '../interfaces/repositories/IOrderRepository';
 import { HttpError } from '../utils/errors/HttpError';
 import ProductService from './ProductService';
@@ -18,7 +18,7 @@ export default class OrderService {
         private productService: ProductService,
     ) {}
 
-    private async validateProducts(
+    public async validateProducts(
         products: {
             name: string;
             quantity: number;
@@ -27,15 +27,15 @@ export default class OrderService {
         const productsResponse: ProductInterface[] = [];
 
         for (const product of products) {
-            const findedProduct = await this.productService.findByName(product.name);
+            const findProduct = await this.productService.findByName(product.name);
 
-            if (findedProduct.quantity < product.quantity)
+            if (findProduct.quantity < product.quantity)
                 throw new HttpError(
                     400,
-                    `There are only ${findedProduct.quantity} units of ${product.name} in stock`,
+                    `There are only ${findProduct.quantity} units of ${product.name} in stock`,
                 );
 
-            productsResponse.push({ ...product, price: findedProduct.price });
+            productsResponse.push({ ...product, price: findProduct.price });
         }
 
         return productsResponse;
