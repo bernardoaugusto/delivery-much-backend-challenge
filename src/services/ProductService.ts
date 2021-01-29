@@ -3,7 +3,6 @@ import { ObjectID } from 'mongodb';
 
 import Product from '../database/schemas/Product';
 import { OptionsGetAllInterface } from '../interfaces/common';
-
 import {
     ProductInterface,
     ProductQueryParamsInterface,
@@ -26,6 +25,14 @@ export default class ProductService {
         const product = await this.productRepository.findOne(
             new ObjectID(productId),
         );
+
+        if (!product) throw new HttpError(404, 'Product not found');
+
+        return product;
+    }
+
+    public async findByName(name: string): Promise<Product> {
+        const product = await this.productRepository.findByName(name);
 
         if (!product) throw new HttpError(404, 'Product not found');
 

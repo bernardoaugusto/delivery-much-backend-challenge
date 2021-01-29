@@ -23,6 +23,10 @@ export default class ProductRepository implements IProductRepository {
         return this.ormRepository.findOne({ where: { _id: productId } });
     }
 
+    public async findByName(name: string): Promise<Product | undefined> {
+        return this.ormRepository.findOne({ where: { name } });
+    }
+
     public async findMany(options: OptionsGetAllInterface): Promise<Product[]> {
         return this.ormRepository.find(options);
     }

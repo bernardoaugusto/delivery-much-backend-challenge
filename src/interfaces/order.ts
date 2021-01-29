@@ -7,3 +7,10 @@ export interface OrderInterface {
     products: ProductInterface[];
     total: number;
 }
+
+export interface CreateOrderInterface {
+    products: {
+        name: string;
+        quantity: number;
+    }[];
+}

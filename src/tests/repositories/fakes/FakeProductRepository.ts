@@ -25,6 +25,10 @@ export default class ProductRepository implements IProductRepository {
         );
     }
 
+    public async findByName(name: string): Promise<Product | undefined> {
+        return this.products.find(product => product.name === name);
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public async findMany(options: OptionsGetAllInterface): Promise<Product[]> {
         return this.products;
