@@ -23,7 +23,7 @@ export const findByName = async (req: Request, res: Response): Promise<Response>
 
 export const findAll = async (req: Request, res: Response): Promise<Response> => {
     const productService = container.resolve(ProductService);
-    const orders = await productService.findMany(req.query);
+    const products = await productService.findMany(req.query);
 
-    return res.status(200).json({ orders });
+    return res.status(200).json({ products });
 };

@@ -42,6 +42,42 @@ describe('Product', () => {
         }
     });
 
+    it('Should return a Product incremented', async () => {
+        const sut = await productService.createAndSave({
+            name: 'increment',
+            price: 10,
+            quantity: 1,
+        });
+
+        const res = await productService.incrementProduct(sut.name);
+
+        expect(res).toEqual({ ...sut, quantity: 2 });
+    });
+
+    it('Should return a Product decremented', async () => {
+        const sut = await productService.createAndSave({
+            name: 'decrement',
+            price: 10,
+            quantity: 1,
+        });
+
+        const res = await productService.decrementProduct(sut.name);
+
+        expect(res).toEqual({ ...sut, quantity: 0 });
+    });
+
+    it('Should return a Product not decremented when quantity is 0', async () => {
+        const sut = await productService.createAndSave({
+            name: 'decrement with quantity = 0',
+            price: 10,
+            quantity: 0,
+        });
+
+        const res = await productService.decrementProduct(sut.name);
+
+        expect(res).toEqual(sut);
+    });
+
     it('Should return a Products list', async () => {
         const sut = await makeSut();
 

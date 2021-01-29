@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { Connection, Channel, connect, Message } from 'amqplib';
 
-export default class RabbitmqServer {
+export default class RabbitMQServer {
     private conn: Connection;
 
     private channel: Channel;

@@ -93,7 +93,7 @@ describe('Product Route context', () => {
         const res = await request(app).get(`/api/products`);
 
         expect(res.status).toBe(200);
-        expect(res.body).toEqual({ orders: 'findMany' });
+        expect(res.body).toEqual({ products: 'findMany' });
         expect(productServiceSpy.findMany.calledWithExactly({})).toBeTruthy();
     });
 
@@ -110,7 +110,7 @@ describe('Product Route context', () => {
         const res = await request(app).get(`/api/products`).query(queryParams);
 
         expect(res.status).toBe(200);
-        expect(res.body).toEqual({ orders: 'findMany' });
+        expect(res.body).toEqual({ products: 'findMany' });
         expect(
             productServiceSpy.findMany.calledWithExactly(queryParams),
         ).toBeTruthy();
