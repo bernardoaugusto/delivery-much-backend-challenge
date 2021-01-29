@@ -31,11 +31,19 @@ describe('Product', () => {
         expect(_id).not.toBeUndefined();
     });
 
-    it('Should return a Legacy System by legacySystemId', async () => {
+    it('Should return a Product by id', async () => {
         const sut = await makeSut();
 
         const res = await productService.findOne(sut._id.toString());
 
         expect(res).toEqual(sut);
+    });
+
+    it('Should return a error when not found Product by id', async () => {
+        try {
+            await productService.findOne('invalid_id');
+        } catch (error) {
+            expect(error.message).toEqual('Product not found');
+        }
     });
 });
