@@ -28,6 +28,20 @@ describe('Product Repository context', () => {
         expect(_id).not.toBeUndefined();
     });
 
+    it('Should be return a product when find by id', async () => {
+        const productData = new ProductBuilder()
+            .withName('any name')
+            .withPrice(100)
+            .withQuantity(8)
+            .build();
+
+        const { _id } = await productRepository.createAndSave({ ...productData });
+
+        const res = await productRepository.findOne(<any>_id);
+
+        expect(res).toEqual({ ...productData, _id });
+    });
+
     it('Should be return a list of products when options not provided', async () => {
         const productData = new ProductBuilder()
             .withName('any name 1')
@@ -43,5 +57,21 @@ describe('Product Repository context', () => {
         expect(
             res.findIndex(product => product._id.toString() === sut._id.toString()),
         ).toBeGreaterThanOrEqual(0);
+    });
+
+    it('Should be return a list of products when options are provided', async () => {
+        const productData = new ProductBuilder()
+            .withName('specific name')
+            .withPrice(178)
+            .withQuantity(88)
+            .build();
+
+        const sut = await productRepository.createAndSave({ ...productData });
+
+        const options = { where: { name: 'specific name' } };
+        const res = await productRepository.findMany(options);
+
+        expect(res[0]).toEqual(sut);
+        expect(res.length).toBe(1);
     });
 });
