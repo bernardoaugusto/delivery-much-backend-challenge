@@ -52,7 +52,7 @@ describe('Order Repository context', () => {
 
         const { _id } = await orderRepository.createAndSave(orderData);
 
-        const res = await orderRepository.findOne(<any>_id);
+        const res = await orderRepository.findById(<any>_id);
 
         expect(res).toEqual({ ...orderData, _id });
     });

@@ -19,7 +19,7 @@ export default class ProductRepository implements IProductRepository {
         return this.ormRepository.save(product);
     }
 
-    public async findOne(productId: ObjectID): Promise<Product | undefined> {
+    public async findById(productId: ObjectID): Promise<Product | undefined> {
         return this.ormRepository.findOne({ where: { _id: productId } });
     }
 

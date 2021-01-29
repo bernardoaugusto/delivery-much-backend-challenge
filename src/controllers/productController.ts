@@ -12,18 +12,18 @@ export const create = async (req: Request, res: Response): Promise<Response> => 
     return res.status(201).json(response);
 };
 
-export const findOne = async (req: Request, res: Response): Promise<Response> => {
+export const findById = async (req: Request, res: Response): Promise<Response> => {
     const productId = req.params.id;
 
     const productService = container.resolve(ProductService);
-    const response = await productService.findOne(productId);
+    const response = await productService.findById(productId);
 
     return res.status(200).json(response);
 };
 
 export const findAll = async (req: Request, res: Response): Promise<Response> => {
     const productService = container.resolve(ProductService);
-    const response = await productService.findMany(req.query);
+    const orders = await productService.findMany(req.query);
 
-    return res.status(200).json(response);
+    return res.status(200).json({ orders });
 };

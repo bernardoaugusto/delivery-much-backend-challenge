@@ -29,14 +29,14 @@ describe('Product', () => {
     it('Should return a Product by id', async () => {
         const sut = await makeSut();
 
-        const res = await productService.findOne(sut._id.toString());
+        const res = await productService.findById(sut._id.toString());
 
         expect(res).toEqual(sut);
     });
 
     it('Should return a error when not found Product by id', async () => {
         try {
-            await productService.findOne(new ObjectID().toString());
+            await productService.findById(new ObjectID().toString());
         } catch (error) {
             expect(error.message).toEqual('Product not found');
         }

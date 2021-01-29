@@ -6,6 +6,6 @@ import { OrderInterface } from '../order';
 
 export default interface IOrderRepository {
     createAndSave(orderData: OrderInterface): Promise<Order>;
-    findOne(orderId: ObjectID): Promise<Order | undefined>;
+    findById(orderId: ObjectID): Promise<Order | undefined>;
     findMany(options: OptionsGetAllInterface): Promise<Order[]>;
 }

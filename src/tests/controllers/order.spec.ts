@@ -57,20 +57,20 @@ describe('Order Route context', () => {
         expect(orderServiceSpy.create.notCalled).toBeTruthy();
     });
 
-    it('should be call controller findOne with id returns status 200', async () => {
+    it('should be call controller findById with id returns status 200', async () => {
         const orderId = new ObjectID().toString();
 
-        orderServiceSpy.findOne.resolves(<any>'findOne');
+        orderServiceSpy.findById.resolves(<any>'findById');
         sinon.stub(container, 'resolve').returns(orderServiceSpy);
 
         const res = await request(app).get(`/api/orders/${orderId}`);
 
         expect(res.status).toBe(200);
-        expect(res.body).toBe('findOne');
-        expect(orderServiceSpy.findOne.calledWithExactly(orderId)).toBeTruthy();
+        expect(res.body).toBe('findById');
+        expect(orderServiceSpy.findById.calledWithExactly(orderId)).toBeTruthy();
     });
 
-    it('should be call controller findOne return status 400 when parameter is not an ObjectID', async () => {
+    it('should be call controller findById return status 400 when parameter is not an ObjectID', async () => {
         sinon.stub(container, 'resolve').returns(orderServiceSpy);
 
         const res = await request(app).get('/api/orders/123');
@@ -88,7 +88,7 @@ describe('Order Route context', () => {
         const res = await request(app).get(`/api/orders`);
 
         expect(res.status).toBe(200);
-        expect(res.body).toBe('findMany');
+        expect(res.body).toEqual({ products: 'findMany' });
         expect(orderServiceSpy.findMany.calledWithExactly()).toBeTruthy();
     });
 });

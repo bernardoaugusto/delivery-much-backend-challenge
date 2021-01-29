@@ -72,14 +72,14 @@ describe('Order', () => {
     it('Should return a Order by id', async () => {
         const sut = await makeSut();
 
-        const res = await orderService.findOne(sut._id.toString());
+        const res = await orderService.findById(sut._id.toString());
 
         expect(res).toEqual(sut);
     });
 
     it('Should return a error when not found Order by id', async () => {
         try {
-            await orderService.findOne(new ObjectID().toString());
+            await orderService.findById(new ObjectID().toString());
         } catch (error) {
             expect(error.message).toEqual('Order not found');
         }

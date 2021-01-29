@@ -21,8 +21,8 @@ export default class ProductService {
         return this.productRepository.createAndSave(productData);
     }
 
-    public async findOne(productId: string): Promise<Product> {
-        const product = await this.productRepository.findOne(
+    public async findById(productId: string): Promise<Product> {
+        const product = await this.productRepository.findById(
             new ObjectID(productId),
         );
 

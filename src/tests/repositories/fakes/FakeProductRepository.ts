@@ -19,7 +19,7 @@ export default class ProductRepository implements IProductRepository {
         return product;
     }
 
-    public async findOne(productId: ObjectID): Promise<Product | undefined> {
+    public async findById(productId: ObjectID): Promise<Product | undefined> {
         return this.products.find(
             product => product._id.toString() === productId.toString(),
         );

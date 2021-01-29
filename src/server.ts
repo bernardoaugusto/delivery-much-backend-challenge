@@ -3,7 +3,7 @@ import app from './app';
 
 import connect from './database/connection/connection';
 import './containers';
-import RabbitmqServer from './rabbitmqServer';
+import RabbitMQServer from './RabbitMQServer';
 
 const PORT = process.env.PORT || 3000;
 
@@ -15,7 +15,7 @@ async function startServer() {
         console.log(`Service running on port ${PORT}`);
     });
 
-    const server = new RabbitmqServer('amqp://guest:guest@localhost:5672');
+    const server = new RabbitMQServer('amqp://guest:guest@localhost:5672');
     await server.start();
     await server.consume('incremented', message =>
         console.log(`incremented ${message.content.toString()}`),

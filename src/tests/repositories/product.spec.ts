@@ -37,7 +37,7 @@ describe('Product Repository context', () => {
 
         const { _id } = await productRepository.createAndSave(productData);
 
-        const res = await productRepository.findOne(<any>_id);
+        const res = await productRepository.findById(<any>_id);
 
         expect(res).toEqual({ ...productData, _id });
     });

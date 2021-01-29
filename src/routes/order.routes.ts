@@ -18,7 +18,7 @@ router.get('/', orderController.findAll);
 router.get(
     '/:id',
     validatorMiddleware({ params: idParamSchema }),
-    orderController.findOne,
+    orderController.findById,
 );
 
 export default router;

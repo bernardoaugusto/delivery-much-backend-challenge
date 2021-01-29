@@ -19,7 +19,7 @@ export default class OrderRepository implements IOrderRepository {
         return this.ormRepository.save(order);
     }
 
-    public async findOne(orderId: ObjectID): Promise<Order | undefined> {
+    public async findById(orderId: ObjectID): Promise<Order | undefined> {
         return this.ormRepository.findOne({ where: { _id: orderId } });
     }
 

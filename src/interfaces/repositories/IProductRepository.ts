@@ -6,7 +6,7 @@ import { ProductInterface } from '../product';
 
 export default interface IProductRepository {
     createAndSave(productData: ProductInterface): Promise<Product>;
-    findOne(productId: ObjectID): Promise<Product | undefined>;
+    findById(productId: ObjectID): Promise<Product | undefined>;
     findByName(name: string): Promise<Product | undefined>;
     findMany(options: OptionsGetAllInterface): Promise<Product[]>;
 }

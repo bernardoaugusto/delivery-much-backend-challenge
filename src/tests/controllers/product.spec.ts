@@ -70,20 +70,20 @@ describe('Product Route context', () => {
         expect(productServiceSpy.create.notCalled).toBeTruthy();
     });
 
-    it('should be call controller findOne with id returns status 200', async () => {
+    it('should be call controller findById with id returns status 200', async () => {
         const productId = new ObjectID().toString();
 
-        productServiceSpy.findOne.resolves(<any>'findOne');
+        productServiceSpy.findById.resolves(<any>'findById');
         sinon.stub(container, 'resolve').returns(productServiceSpy);
 
         const res = await request(app).get(`/api/products/${productId}`);
 
         expect(res.status).toBe(200);
-        expect(res.body).toBe('findOne');
-        expect(productServiceSpy.findOne.calledWithExactly(productId)).toBeTruthy();
+        expect(res.body).toBe('findById');
+        expect(productServiceSpy.findById.calledWithExactly(productId)).toBeTruthy();
     });
 
-    it('should be call controller findOne return status 400 when parameter is not an ObjectID', async () => {
+    it('should be call controller findById return status 400 when parameter is not an ObjectID', async () => {
         sinon.stub(container, 'resolve').returns(productServiceSpy);
 
         const res = await request(app).get('/api/products/123');
@@ -101,7 +101,7 @@ describe('Product Route context', () => {
         const res = await request(app).get(`/api/products`);
 
         expect(res.status).toBe(200);
-        expect(res.body).toBe('findMany');
+        expect(res.body).toEqual({ orders: 'findMany' });
         expect(productServiceSpy.findMany.calledWithExactly({})).toBeTruthy();
     });
 
@@ -118,7 +118,7 @@ describe('Product Route context', () => {
         const res = await request(app).get(`/api/products`).query(queryParams);
 
         expect(res.status).toBe(200);
-        expect(res.body).toBe('findMany');
+        expect(res.body).toEqual({ orders: 'findMany' });
         expect(
             productServiceSpy.findMany.calledWithExactly(queryParams),
         ).toBeTruthy();

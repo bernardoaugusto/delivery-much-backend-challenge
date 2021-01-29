@@ -52,8 +52,8 @@ export default class OrderService {
         return this.orderRepository.createAndSave({ products, total });
     }
 
-    public async findOne(orderId: string): Promise<Order> {
-        const order = await this.orderRepository.findOne(new ObjectID(orderId));
+    public async findById(orderId: string): Promise<Order> {
+        const order = await this.orderRepository.findById(new ObjectID(orderId));
 
         if (!order) throw new HttpError(404, 'Order not found');
 
