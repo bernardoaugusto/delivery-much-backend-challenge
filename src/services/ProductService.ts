@@ -33,9 +33,12 @@ export default class ProductService {
     }
 
     public async findMany(params: ProductQueryParamsInterface): Promise<Product[]> {
-        const options = {
-            where: params,
-        } as OptionsGetAllInterface;
+        const options: OptionsGetAllInterface = {
+            where: {},
+        };
+        if (params.name) options.where!.name = params.name;
+        if (params.price) options.where!.price = Number(params.price);
+        if (params.quantity) options.where!.quantity = Number(params.quantity);
 
         return this.productRepository.findMany(options);
     }

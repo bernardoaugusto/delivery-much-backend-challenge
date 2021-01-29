@@ -20,3 +20,10 @@ export const findOne = async (req: Request, res: Response): Promise<Response> =>
 
     return res.status(200).json(response);
 };
+
+export const findAll = async (req: Request, res: Response): Promise<Response> => {
+    const productService = container.resolve(ProductService);
+    const response = await productService.findMany(req.query);
+
+    return res.status(200).json(response);
+};

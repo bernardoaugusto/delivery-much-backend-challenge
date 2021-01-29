@@ -13,6 +13,8 @@ router.post(
     ProductController.create,
 );
 
+router.get('/', ProductController.findAll);
+
 router.get(
     '/:id',
     validatorMiddleware({ params: idParamSchema }),
