@@ -42,6 +42,20 @@ describe('Product Repository context', () => {
         expect(res).toEqual({ ...productData, _id });
     });
 
+    it('Should be return a product when find by name', async () => {
+        const productData = new ProductBuilder()
+            .withName('findByName')
+            .withPrice(11210.68)
+            .withQuantity(78)
+            .build();
+
+        const { _id } = await productRepository.createAndSave(productData);
+
+        const res = await productRepository.findByName(productData.name);
+
+        expect(res).toEqual({ ...productData, _id });
+    });
+
     it('Should be return a list of products when options not provided', async () => {
         const productData = new ProductBuilder()
             .withName('any name 1')

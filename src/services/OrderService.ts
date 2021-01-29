@@ -18,10 +18,15 @@ export default class OrderService {
         private productService: ProductService,
     ) {}
 
-    public async create(orderData: CreateOrderInterface): Promise<Order> {
-        const products: ProductInterface[] = [];
+    private async validateProducts(
+        products: {
+            name: string;
+            quantity: number;
+        }[],
+    ): Promise<ProductInterface[]> {
+        const productsResponse: ProductInterface[] = [];
 
-        for (const product of orderData.products) {
+        for (const product of products) {
             const findedProduct = await this.productService.findByName(product.name);
 
             if (findedProduct.quantity < product.quantity)
@@ -30,20 +35,21 @@ export default class OrderService {
                     `There are only ${findedProduct.quantity} units of ${product.name} in stock`,
                 );
 
-            products.push({ ...product, price: findedProduct.price });
+            productsResponse.push({ ...product, price: findedProduct.price });
         }
+
+        return productsResponse;
+    }
+
+    public async create(orderData: CreateOrderInterface): Promise<Order> {
+        const products = await this.validateProducts(orderData.products);
 
         const total = products.reduce(
             (accumulator, product) => accumulator + product.price * product.quantity,
             0,
         );
 
-        const buildCreateOrder: OrderInterface = {
-            products,
-            total,
-        };
-
-        return this.orderRepository.createAndSave(buildCreateOrder);
+        return this.orderRepository.createAndSave({ products, total });
     }
 
     public async findOne(orderId: string): Promise<Order> {
