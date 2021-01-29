@@ -1,17 +1,10 @@
 import { ObjectID } from 'mongodb';
 
-import FakeProductRepository from '../repositories/fakes/FakeProductRepository';
-import ProductService from '../../services/ProductService';
 import Product from '../../database/schemas/Product';
+import { makeProductService } from './makeInstance/productService';
 
 describe('Product', () => {
-    let fakeProductRepository: FakeProductRepository;
-    let productService: ProductService;
-
-    beforeAll(async () => {
-        fakeProductRepository = new FakeProductRepository();
-        productService = new ProductService(fakeProductRepository);
-    });
+    const productService = makeProductService;
 
     const makeSut = (): Promise<Product> => {
         return productService.create({
