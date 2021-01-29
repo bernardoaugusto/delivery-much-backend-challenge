@@ -6,7 +6,7 @@ import { ObjectID } from 'mongodb';
 import app from '../../app';
 import ProductService from '../../services/ProductService';
 import Product from '../../database/schemas/Product';
-import ProductBuilder from '../testBuilders/productBuilder';
+import ProductBuilder from '../testBuilders/ProductBuilder';
 import { isParamsInValidationErrors } from '../../utils/validation/validationError';
 
 describe('Product Route context', () => {

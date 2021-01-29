@@ -1,7 +1,7 @@
 import { ObjectID } from 'typeorm';
 import { ProductInterface } from '../../interfaces/product';
 
-class ProductBuilder {
+export default class ProductBuilder {
     product: ProductInterface;
 
     constructor() {
@@ -32,5 +32,3 @@ class ProductBuilder {
         return this.product;
     }
 }
-
-export default ProductBuilder;

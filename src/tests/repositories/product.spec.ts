@@ -1,6 +1,6 @@
 import ProductRepository from '../../repositories/ProductRepository';
 import connect from '../../database/connection/connection';
-import ProductBuilder from '../testBuilders/productBuilder';
+import ProductBuilder from '../testBuilders/ProductBuilder';
 import { ProductInterface } from '../../interfaces/product';
 
 describe('Product Repository context', () => {
@@ -35,7 +35,7 @@ describe('Product Repository context', () => {
             .withQuantity(8)
             .build();
 
-        const { _id } = await productRepository.createAndSave({ ...productData });
+        const { _id } = await productRepository.createAndSave(productData);
 
         const res = await productRepository.findOne(<any>_id);
 
@@ -49,7 +49,7 @@ describe('Product Repository context', () => {
             .withQuantity(88)
             .build();
 
-        const sut = await productRepository.createAndSave({ ...productData });
+        const sut = await productRepository.createAndSave(productData);
 
         const options = {};
         const res = await productRepository.findMany(options);
@@ -66,7 +66,7 @@ describe('Product Repository context', () => {
             .withQuantity(88)
             .build();
 
-        const sut = await productRepository.createAndSave({ ...productData });
+        const sut = await productRepository.createAndSave(productData);
 
         const options = { where: { name: 'specific name' } };
         const res = await productRepository.findMany(options);
