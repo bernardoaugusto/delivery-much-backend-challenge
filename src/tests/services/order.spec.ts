@@ -12,14 +12,14 @@ describe('Order', () => {
         await productService.createAndSave({
             name: 'any name',
             price: 10,
-            quantity: 11,
+            quantity: 100000,
         });
 
         return orderService.create({
             products: [
                 {
                     name: 'any name',
-                    quantity: 11,
+                    quantity: 1,
                 },
             ],
         });

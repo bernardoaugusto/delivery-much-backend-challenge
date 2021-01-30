@@ -36,11 +36,11 @@ export default class ProductService {
         return this.createAndSave(product);
     }
 
-    public async decrementProduct(name: string): Promise<Product> {
+    public async decrementProduct(name: string, quantity = 1): Promise<Product> {
         const product = await this.findByName(name);
 
-        if (product.quantity > 0) {
-            product.quantity -= 1;
+        if (product.quantity > 0 && product.quantity >= quantity) {
+            product.quantity -= quantity;
             return this.createAndSave(product);
         }
 

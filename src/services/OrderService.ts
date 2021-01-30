@@ -49,6 +49,13 @@ export default class OrderService {
             0,
         );
 
+        for (const product of products) {
+            await this.productService.decrementProduct(
+                product.name,
+                product.quantity,
+            );
+        }
+
         return this.orderRepository.createAndSave({ products, total });
     }
 
