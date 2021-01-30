@@ -1,21 +1,22 @@
 version: "3.8"
 services:
-    app:
-        build:
-            context: .
-            dockerfile: Dockerfile
-            target: builder
-        command: 'npm run start'
-        ports:
-            - '3000:3000'
-        volumes:
-            - .:/usr/app
-        environment:
-            MONGO_HOST: mongo
-            MONGO_PORT: 27017
-            MONGO_DBNAME: deliverymuch
-        depends_on:
-            - mongo
+    # app:
+    #     build:
+    #         context: .
+    #         dockerfile: Dockerfile
+    #         target: builder
+    #     command: 'npm run start'
+    #     ports:
+    #         - '3000:3000'
+    #     volumes:
+    #         - .:/usr/app
+    #     environment:
+    #         MONGO_HOST: mongo
+    #         MONGO_PORT: 27017
+    #         MONGO_DBNAME: deliverymuch
+    #     depends_on:
+    #         - mongo
+    #         - stock-service
     mongo:
         image: mongo:latest
         ports:

@@ -18,6 +18,7 @@ async function startServer() {
     });
 
     const productService = container.resolve(ProductService);
+
     const server = new RabbitMQServer('amqp://guest:guest@localhost:5672');
     await server.start();
     await server.consume('incremented', async message => {
