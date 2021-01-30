@@ -21,7 +21,7 @@ describe('Order Route context', () => {
         orderServiceSpy.create.resolves(<any>orderData);
         sinon.stub(container, 'resolve').returns(orderServiceSpy);
 
-        const res = await request(app).post('/api/orders').send(orderData);
+        const res = await request(app).post('/orders').send(orderData);
 
         expect(res.status).toBe(201);
         expect(res.body).toStrictEqual(orderData);
@@ -31,7 +31,7 @@ describe('Order Route context', () => {
     it('should be return status 400 when not send params', async () => {
         sinon.stub(container, 'resolve').returns(orderServiceSpy);
 
-        const res = await request(app).post('/api/orders');
+        const res = await request(app).post('/orders');
 
         expect(res.status).toBe(400);
         expect(
@@ -45,7 +45,7 @@ describe('Order Route context', () => {
 
         sinon.stub(container, 'resolve').returns(orderServiceSpy);
 
-        const res = await request(app).post('/api/orders').send(orderData);
+        const res = await request(app).post('/orders').send(orderData);
 
         expect(res.status).toBe(400);
         expect(
@@ -63,7 +63,7 @@ describe('Order Route context', () => {
         orderServiceSpy.findById.resolves(<any>'findById');
         sinon.stub(container, 'resolve').returns(orderServiceSpy);
 
-        const res = await request(app).get(`/api/orders/${orderId}`);
+        const res = await request(app).get(`/orders/${orderId}`);
 
         expect(res.status).toBe(200);
         expect(res.body).toBe('findById');
@@ -73,7 +73,7 @@ describe('Order Route context', () => {
     it('should be call controller findById return status 400 when parameter is not an ObjectID', async () => {
         sinon.stub(container, 'resolve').returns(orderServiceSpy);
 
-        const res = await request(app).get('/api/orders/123');
+        const res = await request(app).get('/orders/123');
 
         expect(res.status).toBe(400);
         expect(isParamsInValidationErrors(['id'], res.body.errors)).toBeTruthy();
@@ -85,7 +85,7 @@ describe('Order Route context', () => {
         orderServiceSpy.findMany.resolves(<any>'findMany');
         sinon.stub(container, 'resolve').returns(orderServiceSpy);
 
-        const res = await request(app).get(`/api/orders`);
+        const res = await request(app).get(`/orders`);
 
         expect(res.status).toBe(200);
         expect(res.body).toEqual({ products: 'findMany' });

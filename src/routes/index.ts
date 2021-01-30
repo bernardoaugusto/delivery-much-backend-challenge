@@ -9,7 +9,7 @@ router.get('/', (req: Request, res: Response) => {
     res.send('Service 1.0.0');
 });
 
-router.use('/api/products', apiProduct);
-router.use('/api/orders', apiOrder);
+router.use('/products', apiProduct);
+router.use('/orders', apiOrder);
 
 export default router;

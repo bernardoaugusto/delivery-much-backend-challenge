@@ -26,7 +26,7 @@ describe('Product Route context', () => {
         productServiceSpy.createAndSave.resolves(<any>productData);
         sinon.stub(container, 'resolve').returns(productServiceSpy);
 
-        const res = await request(app).post('/api/products').send(productData);
+        const res = await request(app).post('/products').send(productData);
 
         expect(res.status).toBe(201);
         expect(res.body).toStrictEqual(productData);
@@ -38,7 +38,7 @@ describe('Product Route context', () => {
     it('should be return status 400 when not send params', async () => {
         sinon.stub(container, 'resolve').returns(productServiceSpy);
 
-        const res = await request(app).post('/api/products');
+        const res = await request(app).post('/products');
 
         expect(res.status).toBe(400);
         expect(
@@ -59,7 +59,7 @@ describe('Product Route context', () => {
 
         sinon.stub(container, 'resolve').returns(productServiceSpy);
 
-        const res = await request(app).post('/api/products').send(productData);
+        const res = await request(app).post('/products').send(productData);
 
         expect(res.status).toBe(400);
         expect(
@@ -77,7 +77,7 @@ describe('Product Route context', () => {
         productServiceSpy.findByName.resolves(<any>'findByName');
         sinon.stub(container, 'resolve').returns(productServiceSpy);
 
-        const res = await request(app).get(`/api/products/${findByName}`);
+        const res = await request(app).get(`/products/${findByName}`);
 
         expect(res.status).toBe(200);
         expect(res.body).toBe('findByName');
@@ -90,7 +90,7 @@ describe('Product Route context', () => {
         productServiceSpy.findMany.resolves(<any>'findMany');
         sinon.stub(container, 'resolve').returns(productServiceSpy);
 
-        const res = await request(app).get(`/api/products`);
+        const res = await request(app).get(`/products`);
 
         expect(res.status).toBe(200);
         expect(res.body).toEqual({ products: 'findMany' });
@@ -107,7 +107,7 @@ describe('Product Route context', () => {
             quantity: '2',
         };
 
-        const res = await request(app).get(`/api/products`).query(queryParams);
+        const res = await request(app).get(`/products`).query(queryParams);
 
         expect(res.status).toBe(200);
         expect(res.body).toEqual({ products: 'findMany' });
