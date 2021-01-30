@@ -29,6 +29,8 @@ export default class ProductService {
     }
 
     public async incrementProduct(name: string): Promise<Product> {
+        console.log('incremente');
+        console.log(`${name}\n\n`);
         const product = await this.findByName(name);
 
         product.quantity += 1;
@@ -37,6 +39,8 @@ export default class ProductService {
     }
 
     public async decrementProduct(name: string, quantity = 1): Promise<Product> {
+        console.log('decremen');
+        console.log(`${name}\n\n`);
         const product = await this.findByName(name);
 
         if (product.quantity > 0 && product.quantity >= quantity) {
