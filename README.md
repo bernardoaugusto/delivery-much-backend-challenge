@@ -97,7 +97,7 @@ Response exemplo:
 ```
 
 
-3. Pedidos aprovados:
+3. Busca todos os pedidos aprovados:
 
 ```
 [GET] orders
@@ -123,7 +123,7 @@ Response exemplo:
 }
 ```
 
-4. Busca um produto pelo `id`:
+4. Busca um pedido pelo `id`:
 
 ```
 [GET] orders/:id
